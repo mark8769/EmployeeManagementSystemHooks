@@ -1,8 +1,21 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import EmployeeService from '../services/EmployeeService'
 
 const ListEmployeeComponent = () => {
 
     const [employees, setEmployees] = useState([])
+
+    // componentDidMount() class component equivalent
+    useEffect( () => {
+        // https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Promises
+        // Promise-based asynchronous pattern in JavaScript
+        EmployeeService.getAllEmployees().then((response) =>{
+            setEmployees(response.data);
+            console.log(response.data);
+        }).catch((error) =>{
+            console.log(error);
+        });
+    }, [])
 
     return (
         <div className="container">
