@@ -11,8 +11,9 @@ const ListEmployeeComponent = () => {
         // Promise-based asynchronous pattern in JavaScript
         EmployeeService.getAllEmployees().then((response) =>{
             setEmployees(response.data);
-            console.log(response.data);
+            console.log(response.data)
         }).catch((error) =>{
+            console.log("Cathching error.")
             console.log(error);
         });
     }, [])
@@ -29,20 +30,19 @@ const ListEmployeeComponent = () => {
                     <th>Employee Last Name</th>
                     <th>Employee Email ID</th>
                 </thead>
-                <tbody>
-                    {/* Write some JSX code 
+                    {/* Write some  JSX code 
                     Make Sure to access employee attributes, based off JSON
                     response being returned from the Spring Boot backend...*/}
-                    {
+                <tbody>
+                    { 
                         employees.map(
-                            employee => {
+                            employee => 
                                 <tr key={employee.id}>
                                     <td>{employee.id}</td>
                                     <td>{employee.firstName}</td>
                                     <td>{employee.lastName}</td>
                                     <td>{employee.emailAddress}</td>
                                 </tr>
-                            }
                         )
                     }
                 </tbody>
