@@ -107,3 +107,52 @@ Solve: Added crossOrigin annotation in Spring Backend.
 
 Why: Calling from frontend (http://localhost:3000/)
      Backend is on (http://localhost:8080/)
+
+
+
+RENDERING ISSUES:
+**works**
+```
+<tbody>
+    { 
+        employees.map(
+            employee => 
+                <tr key={employee.id}>
+                    <td>{employee.id}</td>
+                    <td>{employee.firstName}</td>
+                    <td>{employee.lastName}</td>
+                    <td>{employee.emailAddress}</td>
+                </tr>
+        )
+    }
+</tbody>
+```
+```
+const example = (param) => {
+    // ...
+    return value; // Explicit return
+};
+
+```
+```
+const example = (param) => (
+    value // Implicit return
+);
+```
+**does not work because I am not explicitly returning anything.... (using curly braces)**
+```
+<tbody>
+    { 
+        employees.map(
+            employee => { 
+                <tr key={employee.id}>
+                    <td>{employee.id}</td>
+                    <td>{employee.firstName}</td>
+                    <td>{employee.lastName}</td>
+                    <td>{employee.emailAddress}</td>
+                </tr>
+            }
+        )
+    }
+</tbody>
+```
