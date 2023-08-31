@@ -28,3 +28,7 @@ spring.datasource.username=root
 spring.datasource.password=Mark@123
 spring.datasource.driver-class-name=com.mysql.cj.jbdc.Driver
 ```
+
+```
+npx create-react-app react-hooks-frontend
+```
