@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ListEmployeeComponent from './components/ListEmployeeComponent';
 import HeaderComponent from './components/HeaderComponent';
 import FooterComponent from './components/FooterComponent';
+import AddEmployeeComponent from './components/AddEmployeeComponent';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Routes> {/* Render component based on path. */}
             <Route path="/" element={<ListEmployeeComponent/>}></Route>
             <Route path="/employees" element={<ListEmployeeComponent/>}></Route>
+            <Route path="/add-employee" element={<AddEmployeeComponent/>}></Route>
           </Routes>
         </div>
         <FooterComponent/>
