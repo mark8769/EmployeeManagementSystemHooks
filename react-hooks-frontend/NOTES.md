@@ -156,3 +156,22 @@ const example = (param) => (
     }
 </tbody>
 ```
+
+
+## Some NUANCED notes about importing/exporting in Javascript
+
+// React import is a default export.
+// Typically a library will import the default export with same name.
+// Default exports are not enclosed in braces.
+// Named exports are modules you can import form libraries
+// For example in python I could do: from datetime import time, datetime
+// Datetime is the library, my named exports would be time and datetime.
+// This makes it easier to see what functions I am using, and which ones aren't being used.
+// Most of the time you will never use "React" directly, but this enables JSX (html inside javascript)
+// For your file, mean
+import React, {useState} from 'react'
+
+
+## useHistory hook: 
+
+- Gives you access to the history instance that you may use to navigate.
