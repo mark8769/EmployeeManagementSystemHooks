@@ -6,12 +6,18 @@
 // Datetime is the library, my named exports would be time and datetime.
 // This makes it easier to see what functions I am using, and which ones aren't being used.
 import React, {useState} from 'react'
+import EmployeeService from '../services/EmployeeService';
+// import {useHistory} from "react-router-dom";
+// useHistory replaced by useNavigate in the react version I am using.
+import { useNavigate } from 'react-router-dom';
 
 const AddEmployeeComponent = () => {
 
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [emailAddress, setEmailAddress] = useState("");
+    // const historyObj = useHistory();
+    const navigateObj = useNavigate();
 
     const saveEmployee = (e) => {
         // Don't refresh page on form submission.
@@ -23,6 +29,16 @@ const AddEmployeeComponent = () => {
         // Cool that this idea of "unpacking" comes up so much
         const employee = {firstName, lastName, emailAddress};
         console.log(employee);
+        // Use then, because axios returns a promise.
+        EmployeeService.saveEmployee(employee).then((response) => {
+            console.log(response);
+            // historyObj.push("/employees");
+            navigateObj("/employees");
+
+        }).catch((error) => {
+            console.log(error);
+        })
+
     }
 
     return (
