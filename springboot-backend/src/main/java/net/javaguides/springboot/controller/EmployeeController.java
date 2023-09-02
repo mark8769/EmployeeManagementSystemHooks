@@ -6,7 +6,9 @@ import net.javaguides.springboot.exception.ResourceNotFoundException;
 import net.javaguides.springboot.model.Employee;
 import net.javaguides.springboot.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -39,8 +41,7 @@ public class EmployeeController {
         );
         return ResponseEntity.ok(employee);
     }
-
-    @PutMapping("{id}")
+    @PutMapping("updateEmployee/{id}")
     public ResponseEntity<Employee> updateEmployee(@PathVariable long id, @RequestBody  Employee employeeDetails){
         Employee employee = employeeRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Employee not found with id: " + id)
@@ -51,6 +52,16 @@ public class EmployeeController {
         employee.setEmailAddress(employeeDetails.getEmailAddress());
         employeeRepository.save(employee);
 
-        return ResponseEntity.ok(employee)
+        return ResponseEntity.ok(employee);
+    }
+    @DeleteMapping("deleteEmployee/{id}")
+    public ResponseEntity<Employee> deleteEmployee(@PathVariable long id){
+        Employee employee = employeeRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Employee not found with id: " + id)
+        );
+
+        employeeRepository.delete(employee);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
