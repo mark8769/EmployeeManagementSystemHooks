@@ -1,8 +1,11 @@
 package net.javaguides.springboot.controller;
 import java.util.List;
+
+import net.javaguides.springboot.exception.ResourceNotFoundException;
 import net.javaguides.springboot.model.Employee;
 import net.javaguides.springboot.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -25,5 +28,14 @@ public class EmployeeController {
     @PostMapping
     public Employee createEmployee(@RequestBody Employee employee){
         return employeeRepository.save(employee);
+    }
+    @GetMapping("{id}")
+    public ResponseEntity<Employee> getEmployeeById(@PathVariable long id){
+        // Returns optional, so could return null if not found.
+        Employee employee = employeeRepository.findById(id).orElseThrow(
+                // Pass lambda function (required)
+                () -> new ResourceNotFoundException("Employee not found.")
+        );
+        return ResponseEntity.ok(employee);
     }
 }
