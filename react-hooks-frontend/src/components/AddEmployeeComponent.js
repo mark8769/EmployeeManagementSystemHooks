@@ -5,11 +5,11 @@
 // For example in python I could do: from datetime import time, datetime
 // Datetime is the library, my named exports would be time and datetime.
 // This makes it easier to see what functions I am using, and which ones aren't being used.
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import EmployeeService from '../services/EmployeeService';
 // import {useHistory} from "react-router-dom";
 // useHistory replaced by useNavigate in the react version I am using.
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useParams} from 'react-router-dom';
 
 const AddEmployeeComponent = () => {
 
@@ -18,29 +18,56 @@ const AddEmployeeComponent = () => {
     const [emailAddress, setEmailAddress] = useState("");
     // const historyObj = useHistory();
     const navigateObj = useNavigate();
+    const {id} = useParams();
 
     const saveEmployee = (e) => {
+        
+        const employee = {firstName, lastName, emailAddress};
         // Don't refresh page on form submission.
         e.preventDefault();
-        // This looks weird at first glance...
-        // But firstName = someName
-        // lastName = someLastName ...
-        // When consoled log. The variable name is the key: its value is the value....
-        // Cool that this idea of "unpacking" comes up so much
-        const employee = {firstName, lastName, emailAddress};
-        console.log(employee);
-        // Use then, because axios returns a promise.
-        EmployeeService.saveEmployee(employee).then((response) => {
-            console.log(response);
-            // historyObj.push("/employees");
-            navigateObj("/employees");
+        if(id){
+            EmployeeService.updateEmployee(id, employee).then((response) => {
+                navigateObj("/employees");
+            }).catch((error) => {
+                console.log(error);
+            })
+        }else{
+            // This looks weird at first glance...
+            // But firstName = someName
+            // lastName = someLastName ...
+            // When consoled log. The variable name is the key: its value is the value....
+            // Cool that this idea of "unpacking" comes up so much
+            console.log(employee);
+            // Use then, because axios returns a promise.
+            EmployeeService.saveEmployee(employee).then((response) => {
+                console.log(response);
+                // historyObj.push("/employees");
+                navigateObj("/employees");
 
-        }).catch((error) => {
-            console.log(error);
-        })
-
+            }).catch((error) => {
+                console.log(error);
+            })
+        }
     }
 
+    useEffect( () => {
+        // Place employee information in update employee form.
+        EmployeeService.getEmployeeById(id).then( (response) => {
+            setFirstName(response.data.firstName);
+            setLastName(response.data.lastName);
+            setEmailAddress(response.data.emailAddress);
+        }).catch(error => {
+            console.log(error);
+        })
+    }, [])
+
+    const title = ( () => {
+        if (id){
+            return <h2 className="text-center">Update Employee</h2>
+        }else{
+            return <h2 className="text-center">Add Employee</h2>
+        }
+    })
     return (
         <div>
             <br></br>
@@ -48,7 +75,9 @@ const AddEmployeeComponent = () => {
             <div className="container">
                 <div className="row">
                     <div className="card col-md-6 offset-md-3 offset-md-3">
-                        <h2 className="text-center">Add Employee</h2>
+                        {
+                            title()
+                        }
                         <div className="card-body">
                             <form>
                                 <div className="form-group mb-2">

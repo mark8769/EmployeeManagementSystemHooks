@@ -20,6 +20,9 @@ const ListEmployeeComponent = () => {
         });
     }, [])
 
+    const deleteEmployee = ( () => {
+
+    })
     return (
         <div className="container">
             <h2 className="text-center">
@@ -32,6 +35,7 @@ const ListEmployeeComponent = () => {
                     <th>Employee First Name</th>
                     <th>Employee Last Name</th>
                     <th>Employee Email ID</th>
+                    <th>Actions</th>
                 </thead>
                     {/* Write some  JSX code 
                     Make Sure to access employee attributes, based off JSON
@@ -45,6 +49,12 @@ const ListEmployeeComponent = () => {
                                     <td>{employee.firstName}</td>
                                     <td>{employee.lastName}</td>
                                     <td>{employee.emailAddress}</td>
+                                    <td>
+                                        <Link 
+                                            className="btn btn-info" 
+                                            to={`/updateEmployee/${employee.id}`}>Update</Link>
+                                        <button className="btn btn-danger">Delete</button>
+                                    </td>
                                 </tr>
                         )
                     }
