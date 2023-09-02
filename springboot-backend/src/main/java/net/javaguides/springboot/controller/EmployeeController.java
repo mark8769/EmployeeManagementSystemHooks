@@ -1,4 +1,5 @@
 package net.javaguides.springboot.controller;
+import java.security.interfaces.ECKey;
 import java.util.List;
 
 import net.javaguides.springboot.exception.ResourceNotFoundException;
@@ -34,8 +35,22 @@ public class EmployeeController {
         // Returns optional, so could return null if not found.
         Employee employee = employeeRepository.findById(id).orElseThrow(
                 // Pass lambda function (required)
-                () -> new ResourceNotFoundException("Employee not found.")
+                () -> new ResourceNotFoundException("Employee not found with id: " + id)
         );
         return ResponseEntity.ok(employee);
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<Employee> updateEmployee(@PathVariable long id, @RequestBody  Employee employeeDetails){
+        Employee employee = employeeRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Employee not found with id: " + id)
+        );
+
+        employee.setFirstName(employeeDetails.getFirstName());
+        employee.setLastName(employeeDetails.getLastName());
+        employee.setEmailAddress(employeeDetails.getEmailAddress());
+        employeeRepository.save(employee);
+
+        return ResponseEntity.ok(employee)
     }
 }
