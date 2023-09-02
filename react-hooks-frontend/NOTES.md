@@ -175,3 +175,11 @@ import React, {useState} from 'react'
 ## useHistory hook: 
 
 - Gives you access to the history instance that you may use to navigate.
+
+### useNavigate hook:
+
+- Same as useHistory, serves as replacement in newwer versions of react-router-dom library.
+
+## useParams hook:
+
+- Gives you the ability to get url parameters from the urls signature.
