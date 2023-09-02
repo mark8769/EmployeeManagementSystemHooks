@@ -9,7 +9,7 @@ import React, {useState} from 'react'
 import EmployeeService from '../services/EmployeeService';
 // import {useHistory} from "react-router-dom";
 // useHistory replaced by useNavigate in the react version I am using.
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const AddEmployeeComponent = () => {
 
@@ -81,6 +81,7 @@ const AddEmployeeComponent = () => {
                                     </input>
                                     <br></br>
                                     <button className="btn btn-success" onClick={(e) => saveEmployee(e)}>Submit</button>
+                                    <Link to="/employees" className="btn btn-danger">Cancel</Link>
                                 </div>
                             </form>
                         </div>
